@@ -8,14 +8,13 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /app
 
 # Copy project files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Install dependencies WITHOUT running Symfony scripts
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Expose Render port
 EXPOSE 10000
